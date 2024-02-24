@@ -3,11 +3,32 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import Router from './Router';
 import reportWebVitals from './reportWebVitals';
+import GlobalStyles from './Styles/global';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RecoilRoot } from 'recoil';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+const RouterObject = createBrowserRouter(Router);
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      useErrorBoundary: true,
+    },
+  },
+});
+
 root.render(
   <React.StrictMode>
-    <Router />
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <RouterProvider router={RouterObject} />
+        <GlobalStyles />
+      </RecoilRoot>
+    </QueryClientProvider>
   </React.StrictMode>,
 );
 

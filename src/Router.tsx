@@ -1,15 +1,32 @@
-import React from 'react';
+import BottomNavigationFooter from '@components/layout/bottomNavigationFooter';
 import { Home } from '@pages/Home';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-function Router() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
+import Error404 from './Error/error404';
+import Reserve from '@pages/Reserve';
 
-export default Router;
+const router = [
+  {
+    path: '/',
+    element: <BottomNavigationFooter />,
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        path: '/like',
+        element: <Home />,
+      },
+    ],
+  },
+  {
+    path: '/reserve/:id',
+    element: <Reserve />,
+  },
+  {
+    path: '/*',
+    element: <Error404 />,
+  },
+];
+
+export default router;
